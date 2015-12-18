@@ -122,6 +122,18 @@
         - is_metal | bool
       tags:
         - cinder-config
+    - name: Debug storage_bridge
+      debug:
+        var: storage_bridge
+      when:
+        - hostvars[inventory_hostname]['container_networks']['storage_address']['bridge'] is defined
+        - is_metal | bool
+    - name: Debug host_vars
+      debug:
+        var: hostvars[inventory_hostname]
+      when:
+        - hostvars[inventory_hostname]['container_networks']['storage_address']['bridge'] is defined
+        - is_metal | bool
     - name: Set cinder storage address (is_metal)
       set_fact:
         storage_address: "{{ hostvars[inventory_hostname][storage_bridge]['ipv4']['address'] }}"
